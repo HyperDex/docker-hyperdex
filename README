@@ -1,2 +1,24 @@
 HyperDex Dockerfiles
 ====================
+
+This repository contains Dockerfiles used for HyperDex.  The dockerfiles are
+listed below with a short description for each.
+
+deploy/coord:
+    An Ubuntu 14.04 image that has the coordinator pre-installed.
+    Run the coordinator with:
+
+        docker run --net=host -t -i <image> hyperdex coordinator <normal opts> -D /hyperdex/coord
+
+deploy/daemon:
+    An Ubuntu 14.04 image that has the daemon pre-installed.
+    Run the daemon with:
+
+        docker run --net=host -t -i <image> hyperdex daemon <normal opts> -D /hyperdex/daemon
+
+releng/linux-amd64:
+    Used to build the self-contained Linux/amd64 binary distribution.
+    Build the tarball with:
+
+        docker run -t -i <image>
+        docker cp <container>:/root/hyperdex-<version>-linux-amd64.tar.gz .
