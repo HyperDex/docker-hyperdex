@@ -1,0 +1,129 @@
+--- Makefile	2014-08-21 14:16:25.370714655 +0000
++++ Makefile.patched	2014-08-21 14:16:21.658714771 +0000
+@@ -885,7 +885,7 @@
+ JAR = 
+ JAVAC = 
+ JNI_CPPFLAGS = 
+-JSON_LIBS = -ljson
++JSON_LIBS = /usr/local/hyperdex/lib/libjson.a /usr/local/hyperdex/lib/libjson-c.a
+ LD = /usr/bin/ld -m elf_x86_64
+ LDFLAGS = -L/usr/local/hyperdex/lib -fPIC -fpic
+ LEX = :
+@@ -1383,7 +1383,7 @@
+ 	daemon/state_transfer_manager_transfer_out_state.cc
+ hyperdex_daemon_CXXFLAGS = $(AM_CXXFLAGS) $(CXXFLAGS)
+ hyperdex_daemon_LDADD = $(REPLICANT_LIBS) $(HYPERLEVELDB_LIBS) \
+-	$(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) -lpopt -lglog -lrt \
++	$(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a /usr/local/hyperdex/lib/libglog.a -lrt \
+ 	-lpthread
+ daemon_test_identifier_collector_SOURCES = daemon/test/identifier_collector.cc daemon/identifier_collector.cc $(th_sources)
+ daemon_test_identifier_collector_CXXFLAGS = $(AM_CXXFLAGS) $(CXXFLAGS)
+@@ -1400,7 +1400,7 @@
+ libhyperdex_coordinator_la_LIBADD = $(E_LIBS)
+ hyperdex_coordinator_SOURCES = tools/coordinator.cc
+ hyperdex_coordinator_CPPFLAGS = -DHYPERDEX_EXEC_DIR=\""$(hyperdexexecdir)\"" $(AM_CPPFLAGS) $(CPPFLAGS)
+-hyperdex_coordinator_LDADD = $(BUSYBEE_LIBS) $(E_LIBS) -lpopt
++hyperdex_coordinator_LDADD = $(BUSYBEE_LIBS) $(E_LIBS) /usr/local/hyperdex/lib/libpopt.a
+ libhyperdex_client_la_SOURCES = common/attribute.cc \
+ 	common/attribute_check.cc common/configuration.cc \
+ 	common/coordinator_link.cc common/datatype_document.cc \
+@@ -1448,13 +1448,13 @@
+ libhyperdex_admin_la_LIBADD = $(REPLICANT_LIBS) $(BUSYBEE_LIBS) \
+ 	$(E_LIBS) $(JSON_LIBS)
+ bindings_c_client_testcompile_SOURCES = bindings/c/client-testcompile.c
+-bindings_c_client_testcompile_LDADD = libhyperdex-client.la
++bindings_c_client_testcompile_LDADD = -static-libtool-libs libhyperdex-client.la -lrt -lpthread
+ bindings_c_admin_testcompile_SOURCES = bindings/c/admin-testcompile.c
+-bindings_c_admin_testcompile_LDADD = libhyperdex-admin.la
++bindings_c_admin_testcompile_LDADD = -static-libtool-libs libhyperdex-admin.la -lrt -lpthread
+ bindings_cc_client_testcompile_SOURCES = bindings/cc/client-testcompile.cc
+-bindings_cc_client_testcompile_LDADD = libhyperdex-client.la
++bindings_cc_client_testcompile_LDADD = -static-libtool-libs libhyperdex-client.la -lrt -lpthread
+ bindings_cc_admin_testcompile_SOURCES = bindings/cc/admin-testcompile.cc
+-bindings_cc_admin_testcompile_LDADD = libhyperdex-admin.la
++bindings_cc_admin_testcompile_LDADD = -static-libtool-libs libhyperdex-admin.la -lrt -lpthread
+ 
+ ##################################### Java #####################################
+ hyperdex_client_jarfile = bindings/java/org.hyperdex.client-$(VERSION).jar
+@@ -1616,56 +1616,56 @@
+ 	test/sh/bindings.ruby.RangeSearchString.sh \
+ 	test/sh/bindings.ruby.RegexSearch.sh
+ test_replication_stress_test_SOURCES = test/replication-stress-test.cc
+-test_replication_stress_test_LDADD = libhyperdex-client.la $(E_LIBS) -lpopt -lpthread
++test_replication_stress_test_LDADD = libhyperdex-client.la $(E_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread
+ test_search_stress_test_SOURCES = test/search-stress-test.cc
+-test_search_stress_test_LDADD = libhyperdex-client.la $(E_LIBS) -lpopt -lpthread
++test_search_stress_test_LDADD = libhyperdex-client.la $(E_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread
+ test_simple_consistency_stress_test_SOURCES = test/simple-consistency-stress-test.cc
+-test_simple_consistency_stress_test_LDADD = libhyperdex-client.la $(E_LIBS) -lpopt -lpthread
++test_simple_consistency_stress_test_LDADD = libhyperdex-client.la $(E_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread
+ hyperdex_SOURCES = hyperdex.cc
+ hyperdex_CPPFLAGS = -DHYPERDEX_EXEC_DIR=\""$(hyperdexexecdir)\"" $(AM_CPPFLAGS) $(CPPFLAGS)
+-hyperdex_LDADD = -lpopt
++hyperdex_LDADD = /usr/local/hyperdex/lib/libpopt.a
+ hyperdex_add_space_SOURCES = tools/add-space.cc
+-hyperdex_add_space_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_add_space_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_rm_space_SOURCES = tools/rm-space.cc
+-hyperdex_rm_space_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_rm_space_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_mv_space_SOURCES = tools/mv-space.cc
+-hyperdex_mv_space_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_mv_space_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_list_spaces_SOURCES = tools/list-spaces.cc
+-hyperdex_list_spaces_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_list_spaces_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_validate_space_SOURCES = tools/validate-space.cc
+-hyperdex_validate_space_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_validate_space_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_add_index_SOURCES = tools/add-index.cc
+-hyperdex_add_index_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_add_index_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_rm_index_SOURCES = tools/rm-index.cc
+-hyperdex_rm_index_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_rm_index_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_show_config_SOURCES = tools/show-config.cc
+-hyperdex_show_config_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_show_config_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_server_register_SOURCES = tools/server-register.cc
+-hyperdex_server_register_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_server_register_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_server_online_SOURCES = tools/server-online.cc
+-hyperdex_server_online_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_server_online_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_server_offline_SOURCES = tools/server-offline.cc
+-hyperdex_server_offline_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_server_offline_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_server_forget_SOURCES = tools/server-forget.cc
+-hyperdex_server_forget_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_server_forget_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_server_kill_SOURCES = tools/server-kill.cc
+-hyperdex_server_kill_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_server_kill_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_perf_counters_SOURCES = tools/perf-counters.cc
+-hyperdex_perf_counters_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_perf_counters_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_set_read_only_SOURCES = tools/set-read-only.cc
+-hyperdex_set_read_only_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_set_read_only_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_set_read_write_SOURCES = tools/set-read-write.cc
+-hyperdex_set_read_write_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_set_read_write_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_set_fault_tolerance_SOURCES = tools/set-fault-tolerance.cc
+-hyperdex_set_fault_tolerance_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_set_fault_tolerance_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_wait_until_stable_SOURCES = tools/wait-until-stable.cc
+-hyperdex_wait_until_stable_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_wait_until_stable_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_backup_SOURCES = tools/backup.cc
+-hyperdex_backup_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_backup_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_backup_manager_SOURCES = tools/backup-manager.cc
+-hyperdex_backup_manager_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_backup_manager_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ hyperdex_raw_backup_SOURCES = tools/raw-backup.cc
+-hyperdex_raw_backup_LDADD = libhyperdex-admin.la -lpopt
++hyperdex_raw_backup_LDADD = -static-libtool-libs libhyperdex-admin.la $(REPLICANT_LIBS) $(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a -lpthread -lrt
+ maint_lib_check_SOURCES = maint/lib-check.c
+ maint_lib_check_LDADD = -ldl
+ all: $(BUILT_SOURCES) config.h
