@@ -4,10 +4,10 @@ set -e
 
 PO6_PACKAGE=libpo6-0.5.2
 E_PACKAGE=libe-0.8.1
-BUSYBEE_PACKAGE=busybee-0.5.1
+BUSYBEE_PACKAGE=busybee-0.5.2
 HYPERLEVELDB_PACKAGE=hyperleveldb-1.2.1
-REPLICANT_PACKAGE=replicant-0.6.3
-HYPERDEX_PACKAGE=hyperdex-1.4.2
+REPLICANT_PACKAGE=replicant-0.6.4
+HYPERDEX_PACKAGE=hyperdex-1.4.3
 
 BASE_URL=http://hyperdex.org/src
 
@@ -23,13 +23,13 @@ JSONC_URL="https://github.com/json-c/json-c/archive/${JSONC_PACKAGE}.tar.gz"
 cat > /tmp/hyperdex.sha1 << EOF
 dcbce34fe3f1032381e125204168dac71d159ec3  libpo6-0.5.2.tar.gz
 95c42531d4834b5eb801694b6929f831b76a24f0  libe-0.8.1.tar.gz
-4a33839aa1b1cca50ab1ad9edfd54745ced07e3f  busybee-0.5.1.tar.gz
+e50b4a679791195f079e775ca06bf728711d0d72  busybee-0.5.2.tar.gz
 fc43412dbc2cafc7cee8fd47b3e12a84c2833ec4  hyperleveldb-1.2.1.tar.gz
 cfe94a15a2404db85858a81ff8de27c8ff3e235e  popt-1.16.tar.gz
 ed40c26ecffc5ad47c618684415799ebaaa30d65  glog-0.3.3.tar.gz
-e3677d6998623db3fdba4ac834eb69e8be6852c2  replicant-0.6.3.tar.gz
+bc2527c31ef4671859926fc31b6eb80b9011026e  replicant-0.6.4.tar.gz
 1910e10ea57a743ec576688700df4a0cabbe64ba  json-c-0.11-20130402.tar.gz
-b0b663910ecee71cb28aba762b092463d97faab9  hyperdex-1.4.2.tar.gz
+5b8e90563a2320b3031a0ac89fcc5f91644ddd41  hyperdex-1.4.3.tar.gz
 EOF
 
 OUTPUT=/root/"${HYPERDEX_PACKAGE}"-linux-amd64.tar.gz
