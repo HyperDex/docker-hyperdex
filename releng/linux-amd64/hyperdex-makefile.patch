@@ -1,6 +1,6 @@
---- Makefile	2014-08-21 14:16:25.370714655 +0000
-+++ Makefile.patched	2014-08-21 14:16:21.658714771 +0000
-@@ -885,7 +885,7 @@
+--- Makefile	2014-08-25 02:07:33.623845635 +0000
++++ Makefile.patched	2014-08-25 02:07:30.231845734 +0000
+@@ -886,7 +886,7 @@
  JAR = 
  JAVAC = 
  JNI_CPPFLAGS = 
@@ -9,16 +9,16 @@
  LD = /usr/bin/ld -m elf_x86_64
  LDFLAGS = -L/usr/local/hyperdex/lib -fPIC -fpic
  LEX = :
-@@ -1383,7 +1383,7 @@
+@@ -1385,7 +1385,7 @@
  	daemon/state_transfer_manager_transfer_out_state.cc
  hyperdex_daemon_CXXFLAGS = $(AM_CXXFLAGS) $(CXXFLAGS)
  hyperdex_daemon_LDADD = $(REPLICANT_LIBS) $(HYPERLEVELDB_LIBS) \
--	$(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) -lpopt -lglog -lrt \
+-	$(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) -lpopt -lglog \
 +	$(BUSYBEE_LIBS) $(E_LIBS) $(JSON_LIBS) /usr/local/hyperdex/lib/libpopt.a /usr/local/hyperdex/lib/libglog.a -lrt \
- 	-lpthread
+ 	$(LRT_LDFLAGS) -lpthread
  daemon_test_identifier_collector_SOURCES = daemon/test/identifier_collector.cc daemon/identifier_collector.cc $(th_sources)
  daemon_test_identifier_collector_CXXFLAGS = $(AM_CXXFLAGS) $(CXXFLAGS)
-@@ -1400,7 +1400,7 @@
+@@ -1402,7 +1402,7 @@
  libhyperdex_coordinator_la_LIBADD = $(E_LIBS)
  hyperdex_coordinator_SOURCES = tools/coordinator.cc
  hyperdex_coordinator_CPPFLAGS = -DHYPERDEX_EXEC_DIR=\""$(hyperdexexecdir)\"" $(AM_CPPFLAGS) $(CPPFLAGS)
@@ -27,7 +27,7 @@
  libhyperdex_client_la_SOURCES = common/attribute.cc \
  	common/attribute_check.cc common/configuration.cc \
  	common/coordinator_link.cc common/datatype_document.cc \
-@@ -1448,13 +1448,13 @@
+@@ -1450,13 +1450,13 @@
  libhyperdex_admin_la_LIBADD = $(REPLICANT_LIBS) $(BUSYBEE_LIBS) \
  	$(E_LIBS) $(JSON_LIBS)
  bindings_c_client_testcompile_SOURCES = bindings/c/client-testcompile.c
@@ -45,7 +45,7 @@
  
  ##################################### Java #####################################
  hyperdex_client_jarfile = bindings/java/org.hyperdex.client-$(VERSION).jar
-@@ -1616,56 +1616,56 @@
+@@ -1618,56 +1618,56 @@
  	test/sh/bindings.ruby.RangeSearchString.sh \
  	test/sh/bindings.ruby.RegexSearch.sh
  test_replication_stress_test_SOURCES = test/replication-stress-test.cc
