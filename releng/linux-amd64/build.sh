@@ -7,7 +7,7 @@ E_PACKAGE=libe-0.8.1
 BUSYBEE_PACKAGE=busybee-0.5.2
 HYPERLEVELDB_PACKAGE=hyperleveldb-1.2.1
 REPLICANT_PACKAGE=replicant-0.6.4
-HYPERDEX_PACKAGE=hyperdex-1.4.3
+HYPERDEX_PACKAGE=hyperdex-1.4.4
 
 BASE_URL=http://hyperdex.org/src
 
@@ -29,7 +29,7 @@ cfe94a15a2404db85858a81ff8de27c8ff3e235e  popt-1.16.tar.gz
 ed40c26ecffc5ad47c618684415799ebaaa30d65  glog-0.3.3.tar.gz
 bc2527c31ef4671859926fc31b6eb80b9011026e  replicant-0.6.4.tar.gz
 1910e10ea57a743ec576688700df4a0cabbe64ba  json-c-0.11-20130402.tar.gz
-5b8e90563a2320b3031a0ac89fcc5f91644ddd41  hyperdex-1.4.3.tar.gz
+c5b126fc7862de66eab54fa5ef3c7cbb84b2bc9b  hyperdex-1.4.4.tar.gz
 EOF
 
 OUTPUT=/root/"${HYPERDEX_PACKAGE}"-linux-amd64.tar.gz
